@@ -1,0 +1,8 @@
+HARDEN_SSH_PORT: 22
+HARDEN_DEPLOY_USERNAME: deploy
+HARDEN_PACKAGES:
+  - apt-transport-https
+  - ca-certificates
+  - ufw
+  - fail2ban
+  - unattended-upgrades

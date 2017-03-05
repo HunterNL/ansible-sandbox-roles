@@ -5,10 +5,20 @@
     groups: sudo
     password: "{{ HARDEN_DEPLOY_PASSWORD|password_hash('sha512',HARDEN_DEPLOY_SALT)}}"
     state: present
-  become: true
 
 - name: Deploy user accepts our pubkey
   authorized_key:
     key: "{{lookup('file','ssh_pubkey.pub')}}"
     user: "{{HARDEN_DEPLOY_USERNAME}}"
     state: present
+
+- name: Update APT Cache
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Standard packages are installed
+  apt: 
+    state: installed
+    pkg: "{{item}}"
+  with_items: "{{HARDEN_PACKAGES}}"
