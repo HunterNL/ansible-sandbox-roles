@@ -1,0 +1,6 @@
+venv
+*.retry
+group_vars/**/*_vault
+vault_key
+ssh_pubkey.pub
+inventories/*

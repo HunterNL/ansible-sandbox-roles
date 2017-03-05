@@ -1,0 +1,8 @@
+- name: Standard security
+  hosts: all
+  roles:
+    - harden
+  vars:
+    HARDEN_DEPLOY_USERNAME: deploy
+    HARDEN_DEPLOY_PASSWORD: "{{VAULT_DEPLOY_PASSWORD}}"
+    HARDEN_DEPLOY_SALT: "{{VAULT_DEPLOY_SALT}}"

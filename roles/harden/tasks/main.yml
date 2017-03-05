@@ -1,0 +1,14 @@
+- name: Deploy user exists
+  user:
+    name: "{{HARDEN_DEPLOY_USERNAME}}"
+    append: true
+    groups: sudo
+    password: "{{ HARDEN_DEPLOY_PASSWORD|password_hash('sha512',HARDEN_DEPLOY_SALT)}}"
+    state: present
+  become: true
+
+- name: Deploy user accepts our pubkey
+  authorized_key:
+    key: "{{lookup('file','ssh_pubkey.pub')}}"
+    user: "{{HARDEN_DEPLOY_USERNAME}}"
+    state: present
