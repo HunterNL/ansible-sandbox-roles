@@ -22,3 +22,36 @@
     state: installed
     pkg: "{{item}}"
   with_items: "{{HARDEN_PACKAGES}}"
+
+- name: Ports are closed by default
+  ufw:
+    state: enabled
+    policy: deny
+
+- name: SSH port is open 
+  ufw:
+    rule: allow
+    port: "{{SSH_PORT}}"
+
+- name: Change SSH port
+  lineinfile: 
+    dest: /etc/ssh/sshd_config 
+    regexp: ^Port\s
+    line: Port {{ SSH_PORT }}
+    state: present
+  notify: Restart SSH
+
+- name: SSH root login is not permitted
+  lineinfile: 
+    dest: /etc/ssh/sshd_config
+    regexp: ^PermitRootLogin
+    line: PermitRootLogin no
+    state: present
+  notify: Restart SSH
+  
+- name: SSH password login is disabled
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: ^#?PasswordAuthentication
+    line: PasswordAuthentication no
+  notify: Restart SSH
