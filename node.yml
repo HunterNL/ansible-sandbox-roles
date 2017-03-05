@@ -1,0 +1,5 @@
+- name: Install Nodejs
+  hosts: all
+  roles:
+    - node
+  become: true

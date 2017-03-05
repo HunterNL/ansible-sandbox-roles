@@ -5,6 +5,7 @@
     groups: sudo
     password: "{{ HARDEN_DEPLOY_PASSWORD|password_hash('sha512',HARDEN_DEPLOY_SALT)}}"
     state: present
+    shell: /bin/bash
 
 - name: Deploy user accepts our pubkey
   authorized_key:

@@ -1,4 +1,6 @@
 SSH_PORT: 56
+DEPLOY_USER: deploy
+
 ansible_become_pass: "{{VAULT_DEPLOY_PASSWORD}}"
-ansible_user: "{{HARDEN_DEPLOY_USERNAME}}"
+ansible_user: "{{DEPLOY_USER}}"
 ansible_port: "{{SSH_PORT}}"
