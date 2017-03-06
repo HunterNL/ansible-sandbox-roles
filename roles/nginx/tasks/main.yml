@@ -1,0 +1,11 @@
+- name: Nginx is installed
+  apt:
+    name: nginx
+    state: installed
+
+- name: Default site is removed
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: Restart nginx
+
