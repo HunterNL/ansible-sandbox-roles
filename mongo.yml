@@ -1,0 +1,5 @@
+- name: Install Mongo
+  hosts: all
+  roles:
+    - mongodb
+  become: true

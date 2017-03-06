@@ -1,0 +1,22 @@
+- name: Mongo repo key is installed
+  apt_key:
+    keyserver: hkp://keyserver.ubuntu.com:80
+    id: 0C49F3730359A14518585931BC711F9BA15703C6
+    state: present
+
+- name: Mongo is a sourced repo
+  apt_repository:
+    repo: "deb http://repo.mongodb.org/apt/debian {{ansible_lsb.codename}}/mongodb-org/3.4 main"
+    state: present
+  register: mongo_repo_added
+
+- name: Update apt cache
+  apt: 
+    update_cache: true
+  when: mongo_repo_added.changed
+
+- name: Mongo is installed
+  apt:
+    name: mongodb-org
+    state: present
+    
