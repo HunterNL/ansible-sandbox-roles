@@ -1,0 +1,15 @@
+[Unit]
+Description=<Description>
+After=network.target
+[Service]
+ExecStart=/usr/bin/node {{appDir}}/main.js
+Restart=always
+User=<USER>
+Group=<USER>
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+Environment=ROOT_URL=<URL>
+Environment=PORT=<PORT>
+WorkingDirectory={{appDir}}
+[Install]
+WantedBy=multi-user.target
