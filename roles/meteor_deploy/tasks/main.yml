@@ -1,0 +1,39 @@
+- name: Make and g++ are installed
+  apt:
+    update_cache: true
+    package: "{{item}}"
+    state: installed
+  with_items: 
+    - make
+    - g++
+  become: true
+
+- name: Target directory exsists
+  file:
+    path: /srv/meteor/{{meteor_deploy_appname}}
+    state: directory
+    owner: "{{ansible_user}}"
+  become: true
+
+
+- name: Transfer and unarchive meteor build tar
+  unarchive:
+    dest: /srv/meteor/{{meteor_deploy_appname}}
+    src: "{{meteor_deploy_local_build_archive_path}}"
+    mode: 0755
+    owner: deploy
+    group: deploy
+  
+- name: Install NPM packages
+  npm:
+    path: /srv/meteor/{{meteor_deploy_appname}}/bundle/programs/server
+
+- name: Install service script
+  template:
+    dest: /etc/systemd/system/meteor_{{meteor_deploy_appname}}.service
+    src: ./service.jinja
+    mode: 0755
+  vars:
+    - appDir: /srv/meteor/{{meteor_deploy_appname}}/bundle
+  become: true
+

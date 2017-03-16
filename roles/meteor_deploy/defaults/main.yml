@@ -1,0 +1,2 @@
+meteor_deploy_local_build_archive_path: .build/app.tar.gz
+meteor_deploy_appname: meteor_app
